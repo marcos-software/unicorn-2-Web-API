@@ -101,6 +101,29 @@ class Answer {
           
         echo $content;
         exit();    
-    }      
-}  
+    }  
+    
+    public function prepare($request) {
+
+        $removalProperties = array();
+    
+        if (strpos($request->method,'Article') !== false) {
+
+            array_push($removalProperties, 'FunktionsAttribute', 'Beschreibungen', 'KurzBeschreibungen');
+        }
+        
+        if (strpos($request->method,'Category') !== false) {
+        
+            array_push($removalProperties, 'FunktionsAttribute');
+        }
+        
+        foreach($request->objects as $object) {
+
+            foreach($removalProperties as $removalProperty) {
+            
+                $object->$removalProperty = null;
+            }             
+        }            
+    }  
+} 
 ?>

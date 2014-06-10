@@ -33,8 +33,11 @@ function getKey() {
 
 function checkLicence() {
 
-    $isValid = strlen($pluginKey) > 0 ? true : false;  
-               
+    $isValid = false;
+    
+    //$isValid = yourPersonalLicenceCheck();
+    $isValid = true;
+         
     return $isValid;
 }
 
@@ -53,7 +56,18 @@ function addArticle($article) {
     //$article->PluginID  = $answerObject->articleId;   
 
     $article->Success   = true;
-    $article->PluginID  = 'yourArticleIdOnMarketplace_'.rand(1000, 9999);                               
+    $article->PluginID  = 'yourArticleIdOnMarketplace_'.rand(1000, 9999);    
+    
+    
+    foreach($article->VakoArtikel as $vakoArt) {
+    
+        foreach($vakoArt->Eigenschaften as $vako) {
+        
+            //$answerObject       = marketplaceApiAction("insertVariation", 'definition='.$vako->Name.'&value='.$vako->Wert);            
+        }
+        
+        $vakoArt->ShopId = 'yourVariationIdOnMarketplace_'.rand(1000, 9999);   
+    }                           
 }
 
 function setArticle($article) {
@@ -214,21 +228,30 @@ function getOrder($orders) {
             $myVakoArtikel                                   = new VakoArtikel();
             
                 $myVakoArtikel->ShopId                       = 'yourVariationIdOnMarketplace'; // the returned variantId from function addArticle($article) on adding this explicit variation  
-          
+                $myVakoArtikel->Aktiv                        = true;
+                
+                $myVakoEigenschaftName_1                     = new EigenschaftBase();
+                $myVakoEigenschaftName_1->Name               = 'Color';
                 $myVakoWertEigenschaft_1                     = new WertEigenschaft();
                 
                     $myVakoWertEigenschaft_1->Name           = 'Color';
                     $myVakoWertEigenschaft_1->Wert           = new Eigenschaftswert();
+                    $myVakoWertEigenschaft_1->Wert->Aktiv    = true;
                     $myVakoWertEigenschaft_1->Wert->Wert     = 'blue';
-                    
-                $myVakoWertEigenschaft_2                     = new WertEigenschaft();
                 
+                $myVakoEigenschaftName_2                     = new EigenschaftBase();
+                $myVakoEigenschaftName_2->Name               = 'Size';    
+                $myVakoWertEigenschaft_2                     = new WertEigenschaft();
+
                     $myVakoWertEigenschaft_2->Name           = 'Size';
                     $myVakoWertEigenschaft_2->Wert           = new Eigenschaftswert();
+                    $myVakoWertEigenschaft_2->Wert->Aktiv    = true;
                     $myVakoWertEigenschaft_2->Wert->Wert     = 'XXL';
                                     
                 array_push($myVakoArtikel->Eigenschaften, $myVakoWertEigenschaft_1, $myVakoWertEigenschaft_2);
-          
+                
+            array_push($myArtikel_2->EigenschaftenNamen, $myVakoEigenschaftName_1, $myVakoEigenschaftName_2);
+                
             array_push($myArtikel_2->VakoArtikel, $myVakoArtikel);
        
        array_push($myOrder->Artikel, $myArtikel_2);
@@ -246,7 +269,7 @@ function getOrder($orders) {
        $myOrder2->Status                                     = Status::EingegangenUndFreigegeben;
        $myOrder2->Rechnungsnummer                            = 'sampleInvoiceId_2_'.rand(1000, 9999);
        $myOrder2->Kundenbemerkung                            = 'Bitte schnellstmöglich versenden, Danke!'; 
-       $myOrder2->Bestelldatum                               = $bestelldatum->format('Y-m-d H:i:s');; 
+       $myOrder2->Bestelldatum                               = $bestelldatum->format('Y-m-d H:i:s'); 
    
        $myOrder2->Kunde                                      = new Kunde(); 
 
@@ -264,14 +287,20 @@ function getOrder($orders) {
               $myOrder2->Kunde->Adresse->Ort                 = 'Geheim';
               $myOrder2->Kunde->Adresse->Land                = Land::DE();
        
-       $myOrder2->Lieferanschrift                            = new Anschrift();
+       $myOrder2->Lieferanschrift                             = new Anschrift();
 
-          $myOrder2->Lieferanschrift->Vorname                = 'Arno';
-          $myOrder2->Lieferanschrift->Nachname               = 'Nym';
-          $myOrder2->Lieferanschrift->Geschlecht             = Geschlecht::Männlich;            
-          $myOrder2->Lieferanschrift->Email                  = $myOrder2->Kunde->Email     
+          $myOrder2->Lieferanschrift->Vorname                 = 'Arno';
+          $myOrder2->Lieferanschrift->Nachname                = 'Nym';
+          $myOrder2->Lieferanschrift->Geschlecht              = Geschlecht::Männlich;            
+          $myOrder2->Lieferanschrift->Email                   = 'arno.nym@mail.de_'.rand(1000, 9999);
           
-          $myOrder2->Lieferanschrift->Adresse                = $myOrder2->Kunde->Adresse
+          $myOrder2->Lieferanschrift->Adresse                 = new Adresse();
+          
+              $myOrder2->Lieferanschrift->Adresse->Straße     = 'Am geheimen Weg';
+              $myOrder2->Lieferanschrift->Adresse->Hausnummer = '1';
+              $myOrder2->Lieferanschrift->Adresse->PLZ        = '13373';
+              $myOrder2->Lieferanschrift->Adresse->Ort        = 'Geheim';
+              $myOrder2->Lieferanschrift->Adresse->Land       = Land::DE();
               
        $myArtikel                                            = new Artikel();
       

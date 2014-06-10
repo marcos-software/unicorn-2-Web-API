@@ -103,6 +103,7 @@ if($_REQUEST['source'] == 'unicorn2') {
         call_user_func($request->method, $object);
 
     /* prepare & send the answer */
+    $answer->prepare($request);
     $answer->add('answer', $request->objects);   
     $answer->send();
 }
