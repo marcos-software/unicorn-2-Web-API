@@ -66,7 +66,7 @@ function addArticle($article) {
             //$answerObject       = marketplaceApiAction("insertVariation", 'definition='.$vako->Name.'&value='.$vako->Wert);            
         }
         
-        $vakoArt->ShopId = 'yourVariationIdOnMarketplace_'.rand(1000, 9999);   
+        $vakoArt->PluginID = 'yourVariationIdOnMarketplace_'.rand(1000, 9999);   
     }                           
 }
 
