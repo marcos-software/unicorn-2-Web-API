@@ -219,7 +219,7 @@ function getOrder($orders) {
        
             $myArtikel_2->ShopId                             = 'yourArticleIdOnMarketplace_2';
             $myArtikel_2->ArtikelNummer                      = 'productArtNo_2';
-            $myArtikel_2->Name                               = 'sampleProduct_2 with variations';
+            $myArtikel_2->Name                               = 'sampleProduct_2 with variations Color: blue Size: XXL';
             $myArtikel_2->Menge                              = 1; 
             $myArtikel_2->Preis                              = 8.99;
             $myArtikel_2->GesammtPreis                       = 8.99;
