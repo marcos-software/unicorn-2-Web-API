@@ -53,7 +53,7 @@ function addArticle($article) {
 
     //$answerObject       = marketplaceApiAction("insertArticle", $article);
     //$article->Success   = $answerObject->success;
-    //$article->PluginID  = $answerObject->articleId;   
+    //$article->PluginId  = $answerObject->articleId;   
 
     $article->Success   = true;
     $article->PluginID  = 'yourArticleIdOnMarketplace_'.rand(1000, 9999);    
@@ -72,7 +72,7 @@ function addArticle($article) {
 
 function setArticle($article) {
         
-    //$answerObject       = marketplaceApiAction("updateArticle", 'articleId='.$article->PluginID.'&articleObject='.$article);
+    //$answerObject       = marketplaceApiAction("updateArticle", 'articleId='.$article->ShopId.'&articleObject='.$article);
     //$article->Success   = $answerObject->success;  
 
     $article->Success   = true;   
@@ -80,7 +80,7 @@ function setArticle($article) {
 
 function delArticle($article) {
     
-    //$answerObject       = marketplaceApiAction("deleteArticle", 'articleId='.$article->PluginID);
+    //$answerObject       = marketplaceApiAction("deleteArticle", 'articleId='.$article->ShopId);
     //$article->Success   = $answerObject->success;  
 
     $article->Success   = true;   
@@ -90,7 +90,7 @@ function addCategory($category) {
     
     //$answerObject        = marketplaceApiAction("insertCategory", $category);
     //$category->Success   = $answerObject->success;
-    //$category->PluginID  = $answerObject->categoryId;   
+    //$category->PluginId  = $answerObject->categoryId;   
 
     $category->Success   = true;
     $category->PluginID  = 'yourCategoryIdOnMarketplace_'.rand(1000, 9999);   
@@ -98,7 +98,7 @@ function addCategory($category) {
 
 function setCategory($category) {
     
-    //$answerObject        = marketplaceApiAction("updateCategory", 'categoryId='.$category->PluginID.'&categoryObject='.$category);
+    //$answerObject        = marketplaceApiAction("updateCategory", 'categoryId='.$category->ShopId.'&categoryObject='.$category);
     //$category->Success   = $answerObject->success;  
 
     $category->Success   = true;      
@@ -106,7 +106,7 @@ function setCategory($category) {
 
 function delCategory($category) {
     
-    //$answerObject        = marketplaceApiAction("deleteCategory", 'categoryId='.$category->PluginID);
+    //$answerObject        = marketplaceApiAction("deleteCategory", 'categoryId='.$category->ShopId);
     //$category->Success   = $answerObject->success;  
 
     $category->Success   = true;   
@@ -323,7 +323,7 @@ function setOrderPaid($orders) {
     
     foreach ($orders as $order) { 
     
-        //$answerObject     = marketplaceApiAction("setPaid", orderId=$order->Bestellung->PluginId);
+        //$answerObject     = marketplaceApiAction("setPaid", orderId=$order->Bestellung->ShopId);
         //$order->Success   = $answerObject->success;  
 
         $order->Success   = true; 
@@ -334,7 +334,7 @@ function setOrderSend($orders) {
     
     foreach ($orders as $order) { 
     
-        //$answerObject     = marketplaceApiAction("setSend", orderId=$order->Bestellung->PluginId);
+        //$answerObject     = marketplaceApiAction("setSend", orderId=$order->Bestellung->ShopId);
         //$order->Success   = $answerObject->success;  
 
         $order->Success   = true; 
@@ -345,7 +345,7 @@ function setOrderCancelled($orders) {
     
     foreach ($orders as $order) { 
     
-        //$answerObject     = marketplaceApiAction("setCancelled", orderId=$order->Bestellung->PluginId);
+        //$answerObject     = marketplaceApiAction("setCancelled", orderId=$order->Bestellung->ShopId);
         //$order->Success   = $answerObject->success;  
 
         $order->Success   = true; 

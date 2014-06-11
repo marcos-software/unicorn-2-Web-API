@@ -69,7 +69,7 @@ function addArticle($article) {
     /**
      *  add a new article to your marketplace and return the articleID
      *  unicorn 2 => your plugin
-     *  $article->PluginID = your returned articleID;    
+     *  $article->PluginId = your returned articleID;    
      *  $article->Success = successstate of your adding procedure                       
      */    
 }
@@ -78,7 +78,7 @@ function setArticle($article) {
     
     /**
      *  update articledetails of an existing article in your marketplace and return a successstate
-     *  you can identify the article with $article->PluginID          
+     *  you can identify the article with $article->ShopId          
      *  unicorn 2 => your plugin
      *  $article->Success = successstate of your updating procedure   
      */
@@ -88,7 +88,7 @@ function delArticle($article) {
     
     /**
      *  delete an existing article in your marketplace and return a successstate
-     *  you can identify the article with $article->PluginID         
+     *  you can identify the article with $article->ShopId         
      *  unicorn 2 => your plugin
      *  $article->Success = successstate of your deleting procedure          
      */     
@@ -99,7 +99,7 @@ function addCategory($category) {
     /**
      *  add a new category to your marketplace and return the categoryID
      *  unicorn 2 => your plugin
-     *  $category->PluginID = your returned categoryID;  
+     *  $category->PluginId = your returned categoryID;  
      *  $category->Success = successstate of your adding procedure                       
      */
 }
@@ -108,7 +108,7 @@ function setCategory($category) {
     
     /**
      *  update categorydetails of an existing category in your marketplace and return a successstate
-     *  you can identify the category with $category->PluginID         
+     *  you can identify the category with $category->ShopId        
      *  unicorn 2 => your plugin
      *  $category->Success = successstate of your updating procedure        
      */      
@@ -118,7 +118,7 @@ function delCategory($category) {
     
     /**
      *  delete an existing category in your marketplace and return a successstate
-     *  you can identify the category with $category->PluginID            
+     *  you can identify the category with $category->ShopId            
      *  unicorn 2 => your plugin
      *  $category->Success = successstate of your deleting procedure         
      */
@@ -146,7 +146,7 @@ function setOrderPaid($orders) {
     
     /**
      *  set the order paid in your marketplace and return a successstate
-     *  you can identify the order with $order->Bestellung->PluginId         
+     *  you can identify the order with $order->Bestellung->ShopId          
      *  unicorn 2 => your plugin
      *  $order->Success = successstate of your updating procedure     
      */        
@@ -156,7 +156,7 @@ function setOrderSend($orders) {
     
     /**
      *  set the order sent in your marketplace and return a successstate
-     *  you can identify the order with $order->Bestellung->PluginId         
+     *  you can identify the order with $order->Bestellung->ShopId          
      *  unicorn 2 => your plugin
      *  $order->Success = successstate of your updating procedure        
      */ 
@@ -166,7 +166,7 @@ function setOrderCancelled($orders) {
     
     /**
      *  cancel the order in your marketplace and return a successstate
-     *  you can identify the order with $order->Bestellung->PluginId         
+     *  you can identify the order with $order->Bestellung->ShopId         
      *  unicorn 2 => your plugin
      *  $order->Success = successstate of your cancellation procedure         
      */       
