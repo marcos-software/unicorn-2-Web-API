@@ -133,7 +133,7 @@ function getOrder($orders) {
        $myOrder->ShopId                                      = 'sampleOrderId_'.rand(1000, 9999);
        $myOrder->Gesammtkosten                               = 9.37; 
        $myOrder->Versandkosten                               = 4.99; 
-       $myOrder->VersandDienstleister                        = 'DHL International';
+       $myOrder->VersandDienstleister                        = 'DHL National';
        $myOrder->Lieferdatum                                 = $lieferdatum->format('Y-m-d H:i:s'); 
        $myOrder->Zahlungsart                                 = Zahlungsart::Nachnahme;
        $myOrder->Waehrung                                    = Waehrung::EURO;
@@ -209,7 +209,7 @@ function getOrder($orders) {
             $myArtikel_1->Name                               = 'sampleProduct_1';
             $myArtikel_1->Hinweis                            = 'with gift package'; 
             $myArtikel_1->Menge                              = 2; 
-            $myArtikel_1->Preis                              = 2.69; // Brutto (pre-tax)
+            $myArtikel_1->Preis                              = 2.69; // Brutto (with tax included)
             $myArtikel_1->GesammtPreis                       = 5.38;
             $myArtikel_1->MwSt                               = Steuer::MwSt7();
        
