@@ -105,18 +105,6 @@ class Answer {
     
     public function send() {
     
-        /*
-        $answer            = array();
-        $answer['key']     = $this->Key;
-        $answer['state']   = $this->_state;
-        $answer['error']   = $this->Error;
-        $answer['stop']    = $this->Stop;
-        $answer['results'] = $this->Results;
-        
-        $json              = json_encode($this);
-
-        $content           = $this->_rc4->encrypt(json_encode($this));  
-        */  
         echo $this->_rc4->encrypt(json_encode($this));  
         exit();    
     }  
