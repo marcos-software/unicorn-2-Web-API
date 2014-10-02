@@ -29,7 +29,7 @@ class Authentification {
         
         if(!$this->isValid()){
     		
-            $answer->error(102);
+            $answer->setErrorCode(102);
             $answer->send();
         }  	 		
     } 

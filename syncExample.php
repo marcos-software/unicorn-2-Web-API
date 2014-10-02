@@ -23,7 +23,9 @@
  * #                                                                           #
  * #############################################################################
  */
-    
+
+/* needet function to verify communication between unicorn 2 and your api extension */
+/* merchant needts to know this key for setting it in unicorn 2 GUI */    
 function getKey() {
 
     $pluginKey = 'test12345';
@@ -31,97 +33,205 @@ function getKey() {
     return $pluginKey;
 }
 
+/* check the licence here, maybe with the pluginkey and you licenceserver */
 function checkLicence() {
 
-    $isValid = false;
-    
-    //$isValid = yourPersonalLicenceCheck();
     $isValid = true;
          
     return $isValid;
 }
 
-function getShippingProfiles($shippingProfiles) {
-    
-    $yourShippingProfiles = array();
-    array_push($yourShippingProfiles, "Paket National", "Paket International", "Kurier");                            
- 
-    foreach($yourShippingProfiles as $profile) array_push($shippingProfiles->Collection, $profile);  
+function getShippingProfiles($object) {
+
+    /* do some api action with your marketplace here */
+    $object->addCollectionEntry("Paket National");
+    $object->addCollectionEntry("Paket International");
+    $object->addCollectionEntry("Kurier (Express)");
 }
 
-function addArticle($article) {
+function addArticle($object) {
 
-    //$answerObject       = marketplaceApiAction("insertArticle", $article);
-    //$article->Success   = $answerObject->success;
-    //$article->PluginId  = $answerObject->articleId;   
-
-    $article->Success   = true;
-    $article->PluginID  = 'yourArticleIdOnMarketplace_'.rand(1000, 9999);    
-    
-    
-    foreach($article->VakoArtikel as $vakoArt) {
-    
-        foreach($vakoArt->Eigenschaften as $vako) {
-        
-            //$answerObject       = marketplaceApiAction("insertVariation", 'definition='.$vako->Name.'&value='.$vako->Wert);            
-        }
-        
-        $vakoArt->PluginID = 'yourVariationIdOnMarketplace_'.rand(1000, 9999);   
-    }                           
+    /* do some api action with your marketplace here */
+    $object->Item->ShopId = 'yourReturnedArticleIdOnMarketplace_'.rand(1000, 9999);                        
 }
 
-function setArticle($article) {
-        
-    //$answerObject       = marketplaceApiAction("updateArticle", 'articleId='.$article->ShopId.'&articleObject='.$article);
-    //$article->Success   = $answerObject->success;  
-
-    $article->Success   = true;   
+function setArticle($object) {
+     
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
 }
 
-function delArticle($article) {
+function delArticle($object) {
     
-    //$answerObject       = marketplaceApiAction("deleteArticle", 'articleId='.$article->ShopId);
-    //$article->Success   = $answerObject->success;  
-
-    $article->Success   = true;   
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
 }
 
-function addCategory($category) {
+function addArticleCrossselling($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the article with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedCrosssellingIdOnMarketplace_'.rand(1000, 9999);   
+                         
+}
+
+function delArticleCrossselling($object) {
     
-    //$answerObject        = marketplaceApiAction("insertCategory", $category);
-    //$category->Success   = $answerObject->success;
-    //$category->PluginId  = $answerObject->categoryId;   
-
-    $category->Success   = true;
-    $category->PluginID  = 'yourCategoryIdOnMarketplace_'.rand(1000, 9999);   
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
 }
 
-function setCategory($category) {
+function addArticleAttribut($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the article with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedAttributIdOnMarketplace_'.rand(1000, 9999);                        
+}
+
+function setArticleAttribut($object) {
+     
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
+}
+
+function delArticleAttribut($object) {
     
-    //$answerObject        = marketplaceApiAction("updateCategory", 'categoryId='.$category->ShopId.'&categoryObject='.$category);
-    //$category->Success   = $answerObject->success;  
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
+}  
 
-    $category->Success   = true;      
+function addArticleImage($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the article with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedArticlebildIdOnMarketplace_'.rand(1000, 9999);                        
 }
 
-function delCategory($category) {
+function setArticleImage($object) {
+     
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */ 
+    /* you can itentify the article with $object->reference->ShopId */  
+}
+
+function delArticleImage($object) {
     
-    //$answerObject        = marketplaceApiAction("deleteCategory", 'categoryId='.$category->ShopId);
-    //$category->Success   = $answerObject->success;  
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
+} 
 
-    $category->Success   = true;   
+function addVako($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the article with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedVakoIdOnMarketplace_'.rand(1000, 9999);                        
 }
 
-function getOrder($orders) {
+function setVako($object) {
+     
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
+}
 
-    $yourOrders = array();
+function delVako($object) {
+    
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the article with $object->reference->ShopId */ 
+}
+
+function addVakoImage($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the vako with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedVakoImageIdOnMarketplace_'.rand(1000, 9999);                        
+}
+
+function setVakoImage($object) {
+     
+    /* do some api action with your marketplace here */          
+    /* you can itentify the item with $object->Item->ShopId */ 
+    /* you can itentify the vako with $object->reference->ShopId */  
+}
+
+function delVakoImage($object) {
+    
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+    /* you can itentify the vako with $object->reference->ShopId */ 
+}
+
+function addCategory($object) {
+
+    /* do some api action with your marketplace here */
+    $object->Item->ShopId = 'yourReturnedCategoryIdOnMarketplace_'.rand(1000, 9999);    
+}
+
+
+function setCategory($object) {
+    
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */   
+}
+
+function delCategory($object) {
+
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */  
+}
+
+function getCategories($object) {
+
+    /* do some api action with your marketplace here */    
+
+    $R1 = new Category();             //    R1 --
+    $R11 = new Category();            //    |   | - R11 --
+    $R111 = new Category();           //    |           | - R111
+    $R112 = new Category();           //    |           | - R112
+    $R11->addSubcategory($R111);      //    |
+    $R11->addSubcategory($R112);      //    |
+    $R1->addSubcategory($R11);        //    |
+    $R2 = new Category();             //    R2 --
+    $R21 = new Category();            //        | - R21 --
+    $R211 = new Category();           //        |       | - R211
+    $R22 = new Category();            //        |
+    $R221 = new Category();           //        | - R22 --
+    $R21->addSubcategory($R211);      //                 | - R221
+    $R22->addSubcategory($R221);
+    $R2->addSubcategory($R21);
+    $R2->addSubcategory($R22);
+
+    $object->addCollectionEntry($R1);   
+    $object->addCollectionEntry($R2);   
+}
+
+function addCategoryLink($object) {
+
+    /* do some api action with your marketplace here */
+    /* you can itentify the article with $object->reference->ShopId */ 
+    $object->Item->ShopId = 'yourReturnedLinkIdOnMarketplace_'.rand(1000, 9999);    
+}
+
+function delCategoryLink($object) {
+
+    /* do some api action with your marketplace here */    
+    /* you can itentify the article with $object->reference->ShopId */ 
+    /* you can itentify the item with $object->Item->ShopId */  
+}
+
+function getOrder($object) {
 
     //$answerObject        = marketplaceApiAction("getOrders", 'state='.$orders->State.'&startdate='.$orders->Startdate);
     //foreach($answerObject->Orders as $order) {
     //
     //    $myOrder = new Bestellung();
     //    ....
-    //    array_push($yourOrders, $myOrder);   
+    //    $object->addCollectionEntry($myOrder); 
     //}
    
     $bestelldatum = new DateTime(); 
@@ -256,7 +366,7 @@ function getOrder($orders) {
        
        array_push($myOrder->Artikel, $myArtikel_2);
 
-    array_push($yourOrders, $myOrder);       
+    $object->addCollectionEntry($myOrder);      
    
     $myOrder2                                                = new Bestellung();
 
@@ -314,41 +424,24 @@ function getOrder($orders) {
        
       array_push($myOrder2->Artikel, $myArtikel);
 
-    array_push($yourOrders, $myOrder2);   
-
-    foreach($yourOrders as $order) array_push($orders->Collection, $order);     
+    $object->addCollectionEntry($myOrder2);  
 }
 
-function setOrderPaid($orders) {
-    
-    foreach ($orders as $order) { 
-    
-        //$answerObject     = marketplaceApiAction("setPaid", orderId=$order->Bestellung->ShopId);
-        //$order->Success   = $answerObject->success;  
+function setOrderPaid($object) {
 
-        $order->Success   = true; 
-    }         
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */        
 }
 
-function setOrderSend($orders) {
+function setOrderSend($object) {
     
-    foreach ($orders as $order) { 
-    
-        //$answerObject     = marketplaceApiAction("setSend", orderId=$order->Bestellung->ShopId);
-        //$order->Success   = $answerObject->success;  
-
-        $order->Success   = true; 
-    }   
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */       
 }
 
-function setOrderCancelled($orders) {
+function setOrderCancelled($object) {
     
-    foreach ($orders as $order) { 
-    
-        //$answerObject     = marketplaceApiAction("setCancelled", orderId=$order->Bestellung->ShopId);
-        //$order->Success   = $answerObject->success;  
-
-        $order->Success   = true; 
-    }       
+    /* do some api action with your marketplace here */    
+    /* you can itentify the item with $object->Item->ShopId */       
 } 
 ?>

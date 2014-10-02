@@ -13,29 +13,25 @@
  * #############################################################################
  */
  
-class Category {
-
-    public $Id = -1;
-    public $Name;
-    public $Subcategories = array();    
+class Result {
     
-    public function __construct($category = null) {   	
-
-        if(!is_null($category)) {
-        
-            $this->Id   = $category->Id;
-            $this->Name = $category->Name;
-
-            foreach($category->Subcategories as $sub) {
-            
-                array_push($this->Subcategories, new Category($sub));            
-            }
-        } 
-    } 
+    public $Errors = array();    
+    public $Collection = array();
+    public $Item;
     
-    public function addSubcategory($category) {
+    public function Result($item) {
+
+        $this->Item = $item;       
+    }
     
-        array_push($this->Subcategories, new Category($category));  
-    }  	  
-}     
+    public function addCollectionEntry($item) {
+    
+        array_push($this->Collection, $item); 
+    }
+
+    public function addError($code = -1, $message = '') {
+    
+        array_push($this->Errors, new Error($code, $message));
+    }
+} 
 ?>

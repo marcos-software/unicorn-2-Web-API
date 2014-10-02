@@ -16,12 +16,14 @@
 if($_REQUEST['source'] == 'unicorn2') {
 
     /* include api classes */
+    require_once('classes/class.result.php');
+    require_once('classes/class.error.php');
     require_once('classes/class.rc4.php');
     require_once('classes/class.request.php');
     require_once('classes/class.authentification.php');    
     require_once('classes/class.answer.php');
     require_once('sync.php');
-     
+
     $requestMethod    = 'POST';      
     $missingParameter = 'N';
     
@@ -49,7 +51,7 @@ if($_REQUEST['source'] == 'unicorn2') {
     /* check the licence */                                          
     if(!checkLicence()) {
     
-        $answer->error(103);
+        $answer->setErrorCode(103);
         $answer->send();
     }
 
@@ -99,12 +101,25 @@ if($_REQUEST['source'] == 'unicorn2') {
     require_once('classes/interface/enum.Marketplaces.php');
 
     /* do the api actions */
-    foreach($request->objects as $object)            
-        call_user_func($request->method, $object);
+    $isEmpty = true;
+
+    foreach($request->objects as $object) {
+
+        $isEmpty = false;
+        $result = new Result($object);
+        call_user_func($request->method, $result);
+        $answer->addResult($result);
+    }
+
+    if($isEmpty)
+    {
+        $result = new Result(null);
+        call_user_func($request->method, $result);
+        $answer->addResult($result);
+    }
 
     /* prepare & send the answer */
-    $answer->prepare($request);
-    $answer->add('answer', $request->objects);   
+    $answer->prepare($request->method); 
     $answer->send();
 }
 ?>

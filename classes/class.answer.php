@@ -15,39 +15,32 @@
  
 class Answer {
     
-    public  $_container = array();
-    private $_state = 100;
-    private $_error = array();
-    private $_answerKey;
-    private $_stop;
+    public $Results = array();
+    public $Error;
+    public $Key;
+    public $Stop;
     private $_rc4;
-    
-    /* States:
-    
-    100 - success
-    101 - parameter is missing
-    102 - authentification is not valid
-    103 - licence is not valid
-    
-    */
     
     public function __construct($pluginKey, $missingParameter) {   	
 
-        $this->_stop = $missingParameter == 'Y';
+        $this->Stop = $missingParameter == 'Y';
         $this->_rc4  = new RC4($pluginKey);
     } 
       
     public function setKey($key) {
 
-        $this->_answerKey = $key;  
+        $this->Key = $key;  
     }
     
-    public function error($state = 104, $parameter = null) {
+    public function setErrorCode($code) {
     
-        $this->_state = $state;
+        $message = '';
+
+        switch($code){
         
-        switch($state){
-        
+            case 100:
+                /* no error, all successed */
+                return;
             case 101:
                 $message = "parameter is missing: $parameter";
                 break;
@@ -58,8 +51,13 @@ class Answer {
                 $message = 'licence is not valid';
                 break;            
         }
-        
-        array_push($this->_error, $message);
+
+        $this->setError($code, $message);
+    }
+    
+    public function setError($code = -1, $message = '') {
+    
+        $this->Error = new Error($code, $message);
     }
     
     public function add($key, $value) {
@@ -86,44 +84,86 @@ class Answer {
         return true; 
     }
     
+    public function addResult($result) {
+    
+        if(in_array($result, $this->Results)) return false;
+        
+        array_push($this->Results, $result); 
+        return true; 
+    }
+    
+    public function deleteResult($result) {
+    
+        if(!in_array($result, $this->Results)) return false;
+        
+        if(($key = array_search($result, $this->Results, true)) !== false) {
+        
+            unset($this->Results[$key]);
+        }
+        return true; 
+    }
+    
     public function send() {
     
-        $answer           = array();
-        $answer['key']    = $this->_answerKey;
-        $answer['state']  = $this->_state;
-        $answer['error']  = $this->_error;
-        $answer['stop']   = $this->_stop;
-        $answer['answer'] = $this->_container;
+        /*
+        $answer            = array();
+        $answer['key']     = $this->Key;
+        $answer['state']   = $this->_state;
+        $answer['error']   = $this->Error;
+        $answer['stop']    = $this->Stop;
+        $answer['results'] = $this->Results;
         
-        $json             = json_encode($answer);
-        
-        $content          = $this->_rc4->encrypt($json);  
-          
-        echo $content;
+        $json              = json_encode($this);
+
+        $content           = $this->_rc4->encrypt(json_encode($this));  
+        */  
+        echo $this->_rc4->encrypt(json_encode($this));  
         exit();    
     }  
     
-    public function prepare($request) {
+    public function prepare($method) {
 
-        $removalProperties = array();
-    
-        if (strpos($request->method,'Article') !== false) {
-
-            array_push($removalProperties, 'FunktionsAttribute', 'Beschreibungen', 'KurzBeschreibungen');
-        }
+        $nonRemovalProperties = array('WawiId', 'ShopId', 'Name');           
+        $clearedResults       = array();
         
-        if (strpos($request->method,'Category') !== false) {
-        
-            array_push($removalProperties, 'FunktionsAttribute');
-        }
-        
-        foreach($request->objects as $object) {
-
-            foreach($removalProperties as $removalProperty) {
+        if ((strpos($method,'add') !== false) || 
+            (strpos($method,'set') !== false) || 
+            (strpos($method,'del') !== false)) {
             
-                $object->$removalProperty = null;
-            }             
-        }            
-    }  
+            foreach($this->Results as $result) {
+            
+                $clearedResult             = new Result();
+                $clearedResult->Errors     = $result->Errors;
+                $clearedResult->Collection = $result->Collection;
+                $clearedResult->Item       = $this->remove($result->Item, $nonRemovalProperties);     
+                
+                array_push($clearedResults, $clearedResult);       
+            } 
+
+            unset($this->Results);
+            $this->Results    = $clearedResults;       
+        }
+    }
+    
+    private function remove($object, $nonRemovalProperties) {
+    
+        $newObject = new stdClass;
+        
+        foreach($object as $property => $value) {
+            
+            if(!is_object($value)) {
+            
+                if(in_array($property, $nonRemovalProperties)) {
+
+                     $newObject->$property = $value;
+                }            
+            } else {
+            
+                $newObject->$property = $this->remove($value, $nonRemovalProperties);              
+            }
+        }
+    
+        return $newObject;      
+    }   
 } 
 ?>
